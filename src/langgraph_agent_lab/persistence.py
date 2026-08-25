@@ -8,9 +8,6 @@ from typing import Any
 def build_checkpointer(kind: str = "memory", database_url: str | None = None) -> Any | None:
     """Return a LangGraph checkpointer.
 
-    TODO(student): implement SQLite support for the persistence extension track.
-    The starter provides MemorySaver only — SQLite/Postgres are extension tasks.
-
     For SQLite:
     - pip install langgraph-checkpoint-sqlite
     - Use SqliteSaver with sqlite3.connect() and WAL mode
@@ -34,6 +31,6 @@ def build_checkpointer(kind: str = "memory", database_url: str | None = None) ->
         return SqliteSaver(conn=connection)
     if kind == "postgres":
         raise NotImplementedError(
-            "TODO(student): implement Postgres checkpointer (optional extension)"
+            "Postgres persistence is an optional extension; use memory or sqlite in this lab."
         )
     raise ValueError(f"Unknown checkpointer kind: {kind}")

@@ -36,9 +36,6 @@ def intake_node(state: AgentState) -> dict:
     }
 
 
-# ─── TODO(student): implement ALL nodes below ────────────────────────
-
-
 def classify_node(state: AgentState) -> dict:
     """Classify the query into a route using an LLM.
 

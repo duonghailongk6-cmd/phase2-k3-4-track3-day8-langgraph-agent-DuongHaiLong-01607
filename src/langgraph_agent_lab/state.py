@@ -41,8 +41,8 @@ class ApprovalDecision(BaseModel):
 class AgentState(TypedDict, total=False):
     """LangGraph state.
 
-    TODO(student): decide which fields should be append-only and which should be overwritten.
-    The current annotations give a safe starting point for auditability.
+    Append-only reducers preserve audit trails and collected results; scalar fields are
+    overwritten with the current workflow values.
     """
 
     thread_id: str
@@ -59,9 +59,6 @@ class AgentState(TypedDict, total=False):
     pending_question: str | None
     proposed_action: str | None
     approval: dict[str, Any] | None
-    # TODO(student): you will need additional fields for clarification, risky actions,
-    # approval decisions, and retry-loop gating. Add them as you implement nodes.
-    # Hint: check what your nodes return and what your routing functions read.
     messages: Annotated[list[str], add]
     tool_results: Annotated[list[str], add]
     errors: Annotated[list[str], add]
