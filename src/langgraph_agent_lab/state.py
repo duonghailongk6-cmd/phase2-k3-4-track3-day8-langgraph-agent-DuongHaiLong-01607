@@ -52,7 +52,13 @@ class AgentState(TypedDict, total=False):
     risk_level: str
     attempt: int
     max_attempts: int
+    requires_approval: bool
+    should_retry: bool
     final_answer: str | None
+    evaluation_result: str
+    pending_question: str | None
+    proposed_action: str | None
+    approval: dict[str, Any] | None
     # TODO(student): you will need additional fields for clarification, risky actions,
     # approval decisions, and retry-loop gating. Add them as you implement nodes.
     # Hint: check what your nodes return and what your routing functions read.
@@ -89,7 +95,13 @@ def initial_state(scenario: Scenario) -> AgentState:
         "risk_level": "unknown",
         "attempt": 0,
         "max_attempts": scenario.max_attempts,
+        "requires_approval": scenario.requires_approval,
+        "should_retry": scenario.should_retry,
         "final_answer": None,
+        "evaluation_result": "",
+        "pending_question": None,
+        "proposed_action": None,
+        "approval": None,
         "messages": [],
         "tool_results": [],
         "errors": [],
