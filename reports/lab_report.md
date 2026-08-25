@@ -47,15 +47,20 @@ The sample data contains seven scenarios. Their expected routing and workflow ou
 are listed below. Runtime values should be refreshed by running
 `make run-scenarios` with an LLM provider configured.
 
-| Scenario | Expected route | Expected outcome | Success | Retries | Interrupts |
-|---|---|---|---:|---:|---:|
-| `S01_simple` | `simple` | LLM answer | Pending runtime | 0 | 0 |
-| `S02_tool` | `tool` | Tool, evaluation, answer | Pending runtime | 0 | 0 |
-| `S03_missing` | `missing_info` | Clarifying question | Pending runtime | 0 | 0 |
-| `S04_risky` | `risky` | Approval, tool, evaluation, answer | Pending runtime | 0 | 1 |
-| `S05_error` | `error` | Retry loop, then successful answer | Pending runtime | 1+ | 0 |
-| `S06_delete` | `risky` | Approval, tool, evaluation, answer | Pending runtime | 0 | 1 |
-| `S07_dead_letter` | `error` | Retry limit, dead-letter escalation | Pending runtime | 1 | 0 |
+| Scenario | Expected | Actual | Success | Nodes | Retries | Interrupts | Approval required | Approval observed | Latency (ms) | Errors |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| `S01_simple` | `simple` | Pending | Pending | Pending | 0 | 0 | No | Pending | Pending | Pending |
+| `S02_tool` | `tool` | Pending | Pending | Pending | 0 | 0 | No | Pending | Pending | Pending |
+| `S03_missing` | `missing_info` | Pending | Pending | Pending | 0 | 0 | No | Pending | Pending | Pending |
+| `S04_risky` | `risky` | Pending | Pending | Pending | 0 | 1 | Yes | Pending | Pending | Pending |
+| `S05_error` | `error` | Pending | Pending | Pending | 1+ | 0 | No | Pending | Pending | Pending |
+| `S06_delete` | `risky` | Pending | Pending | Pending | 0 | 1 | Yes | Pending | Pending | Pending |
+| `S07_dead_letter` | `error` | Pending | Pending | Pending | 1 | 0 | No | Pending | Pending | Pending |
+
+Each generated `scenario_metrics` object contains exactly the required fields:
+`scenario_id`, `expected_route`, `actual_route`, `success`, `nodes_visited`,
+`retry_count`, `interrupt_count`, `approval_required`, `approval_observed`,
+`latency_ms`, and `errors`.
 
 Automated unit validation currently reports **17 passed** tests. The six API-dependent
 graph smoke cases are skipped when no LLM API key is configured. No `outputs/metrics.json`
